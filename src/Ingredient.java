@@ -27,6 +27,7 @@ public class Ingredient {
 		return this.caloriesPerUnit;
 	}
 
+	//FIXME look at PIAZZA
 	public String toString() {
 		return "Name: " + name + " MeasuringUnit: " + measuringUnit + " CaloriesPerUnit: " + caloriesPerUnit;
 

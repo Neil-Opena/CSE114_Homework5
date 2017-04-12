@@ -37,14 +37,26 @@ public class TestRecipeBook {
 			System.out.println(bananaSplit.getRecipeIngredient(bananaSplit.get(i)));
 		}
 		System.out.println("Total Calories: " + bananaSplit.calculateCalories());
-		System.out.println("_____________________________________________________________");
 		CookingRecipe second = new CookingRecipe("Banana Split");
 		second.addOrUpdateRecipeIngredient(banana, 420);
 		second.addOrUpdateRecipeIngredient(icecream, 420);
 		second.addOrUpdateRecipeIngredient(nuts, 69);
 		System.out.println(second.equals(bananaSplit));
+		System.out.println("_____________________________________________________________");
+		RecipeBook book1 = new RecipeBook("My Recipe Book");
+		System.out.println("Added: " + book1.addRecipe("Banana Split",bananaSplit.getRecipe()));
+		System.out.println("Added: " + book1.addRecipe(second.getName() + " test", second.getRecipe()));
+		System.out.println(book1);
 		
+		System.out.println("\n" + "Low Calories:");
+		for(int i = 0; i < book1.findRecipesLowCalories().length; i++){
+			System.out.println(book1.findRecipesLowCalories()[i]);
+		}
 		
+		System.out.println("\n" + "Few Ingredients:");
+		for(int i = 0; i < book1.findRecipesWithFewIngredients(5).length; i++){
+			System.out.println(book1.findRecipesWithFewIngredients(5)[i]);
+		}
 	}
 	
 }

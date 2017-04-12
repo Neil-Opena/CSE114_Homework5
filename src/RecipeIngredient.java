@@ -19,7 +19,7 @@ public class RecipeIngredient extends Ingredient {
 	public void setQuantity(float quantity){
 		this.quantity = quantity;
 	}
-
+	//FIXME look at PIAZZA
 	public String toString() {
 		return super.toString() + " Quantity: " + quantity;
 	}

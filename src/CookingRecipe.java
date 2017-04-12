@@ -5,7 +5,7 @@
  */
 public class CookingRecipe {
 	// contains multiple RecipeIngredient(s)
-	//FINISHED
+	// FINISHED
 	private String name;
 	private RecipeIngredient[] recipe = new RecipeIngredient[1];
 
@@ -16,10 +16,14 @@ public class CookingRecipe {
 	public String getName() {
 		return this.name;
 	}
+	
+	public RecipeIngredient[] getRecipe(){
+		return recipe;
+	}
 
 	public void addOrUpdateRecipeIngredient(Ingredient ingredient, float quantity) {
 		if (recipe[0] == null) {
-			add(ingredient,quantity);
+			add(ingredient, quantity);
 		} else {
 			if (getRecipeIngredient(ingredient) != null) {
 				getRecipeIngredient(ingredient).setQuantity(quantity);
@@ -30,10 +34,10 @@ public class CookingRecipe {
 		}
 	}
 
-	
 	public RecipeIngredient getRecipeIngredient(Ingredient ingredient) {
-		if (ingredient instanceof RecipeIngredient){
-			Ingredient temp = new Ingredient(ingredient.getName(),ingredient.getMeasuringUnit(),ingredient.getCaloriesPerUnit());
+		if (ingredient instanceof RecipeIngredient) {
+			Ingredient temp = new Ingredient(ingredient.getName(), ingredient.getMeasuringUnit(),
+					ingredient.getCaloriesPerUnit());
 			for (int i = 0; i < recipe.length; i++) {
 				if (recipe[i].equals(temp)) {
 					return recipe[i];
@@ -91,32 +95,36 @@ public class CookingRecipe {
 	public int getNumberOfIngredients() {
 		return recipe.length;
 	}
-
+	//FIXME look at PIAZZA
 	public String toString() {
 		String temp = "Recipe Name: " + name + " Ingredients:";
-		for (int i = 0; i < recipe.length; i++) {
-			temp = temp + recipe[i].getName() + ", ";
+		if (get(0) == null) {
+			temp = temp + get(0);
+		} else {
+			for (int i = 0; i < recipe.length; i++) {
+				temp = temp + get(i).getName() + ", ";
+			}
 		}
 		return temp;
 	}
-	
-	public RecipeIngredient get(int index){
+
+	public RecipeIngredient get(int index) {
 		return recipe[index];
 	}
 
-	public boolean equals(Object test){
-		if(test instanceof CookingRecipe){
-			if(((CookingRecipe) test).getNumberOfIngredients() != this.getNumberOfIngredients()){
+	public boolean equals(Object test) {
+		if (test instanceof CookingRecipe) {
+			if (((CookingRecipe) test).getNumberOfIngredients() != this.getNumberOfIngredients()) {
 				return false;
-			}else if(!((CookingRecipe) test).getName().equals(this.getName())){
+			} else if (!((CookingRecipe) test).getName().equals(this.getName())) {
 				return false;
 			}
-			for(int i = 0; i < recipe.length; i++){
-				if(!((CookingRecipe) test).get(i).equals(recipe[i])){
+			for (int i = 0; i < recipe.length; i++) {
+				if (!((CookingRecipe) test).get(i).equals(recipe[i])) {
 					return false;
 				}
 			}
-			
+
 			return true;
 		}
 		return false;

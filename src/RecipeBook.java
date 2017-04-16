@@ -15,6 +15,7 @@ public class RecipeBook {
 	public String getBookName() {
 		return bookName;
 	}
+	
 
 	public CookingRecipe[] getRecipeBook() {
 		return recipeBook;
@@ -46,11 +47,42 @@ public class RecipeBook {
 		return null;
 	}
 
-	public CookingRecipe[] findRecipes(RecipeIngredient[] ingredient) {
+	public CookingRecipe[] findRecipes(RecipeIngredient[] ingredients) {
 		int num = 0;
-		// FIXME
+		for(CookingRecipe recipe: recipeBook){
+			if(recipe.getNumberOfIngredients() >= ingredients.length){
+				boolean allFound = true;
+				for(RecipeIngredient ing : ingredients){
+					if(recipe.getRecipeIngredient(ing) == null){
+						allFound = false;
+					}
+				}
+				if(allFound){
+					num++;
+				}
+			}
+		}
+		if(num == 0){
+			return null;
+		}
 		CookingRecipe[] temp = new CookingRecipe[num];
-		return null;
+		
+		for(int i = 0, j = 0; i < recipeBook.length; i++){
+			if(recipeBook[i].getNumberOfIngredients() >= ingredients.length){
+				boolean allFound = true;
+				for(int k = 0; k < ingredients.length; k++){
+					if(recipeBook[i].getRecipeIngredient(ingredients[k]) == null){
+						allFound = false;
+					}
+				}
+				
+				if(allFound){
+					temp[j] = recipeBook[i];
+					j++;
+				}
+			}
+		}
+		return temp;
 	}
 
 	public CookingRecipe[] findRecipesWithFewIngredients(int numberOfIngredients) {
@@ -99,22 +131,43 @@ public class RecipeBook {
 		return temp;
 	}
 
-	// FIXME look at PIAZZA
 	public String toString() {
-		String temp = "Book Name: " + bookName + " Recipes: ";
+		String temp = "RecipeBook\nbookName=" + bookName;
 		if (get(0) == null) {
-			temp = temp + get(0);
+			temp = temp + "\n[\n" + get(0);
 		} else {
+			temp = temp + "\n[";
 			for (int i = 0; i < recipeBook.length; i++) {
-				temp = temp + get(i).getName() + ", ";
+				temp = temp + "\n" + get(i);
 			}
 		}
-		return temp;
+		return temp + "\n]";
 	}
 
-	// FIXME methods below
+	//oder of cooking recipes does not matter
 	public boolean equals(Object test) {
-		return true;
+		if(test instanceof RecipeBook){
+			if(((RecipeBook)test).getBookName().equals(this.bookName)){
+				if(((RecipeBook) test).getRecipeBook().length == recipeBook.length){
+					for(int i = 0; i < recipeBook.length; i++){
+						//iterate through each recipe in recipeBook
+						boolean found = false;
+						for(int j = 0; j < ((RecipeBook) test).getRecipeBook().length; j++){
+							//iterate through reach recipe in test.getRecipeBook()
+							if(recipeBook[i].equals(((RecipeBook) test).getRecipeBook()[j])){
+								found = true;
+								//if one of the recipes are equal: found = true
+							}
+						}
+						if(!found){
+							return false;
+						}
+					}
+					return true; //all recipes are found
+				}
+			}
+		}
+		return false;
 	}
 
 	public CookingRecipe get(int index) {

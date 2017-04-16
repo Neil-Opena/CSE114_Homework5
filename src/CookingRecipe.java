@@ -16,8 +16,8 @@ public class CookingRecipe {
 	public String getName() {
 		return this.name;
 	}
-	
-	public RecipeIngredient[] getRecipe(){
+
+	public RecipeIngredient[] getRecipe() {
 		return recipe;
 	}
 
@@ -95,23 +95,25 @@ public class CookingRecipe {
 	public int getNumberOfIngredients() {
 		return recipe.length;
 	}
-	//FIXME look at PIAZZA
+
 	public String toString() {
-		String temp = "Recipe Name: " + name + " Ingredients:";
+		String temp = "CookingRecipe" + "\n" + "name=" + name;
 		if (get(0) == null) {
-			temp = temp + get(0);
+			temp = temp + "\n[\n" + get(0);
 		} else {
+			temp = temp + "\n" + "[";
 			for (int i = 0; i < recipe.length; i++) {
-				temp = temp + get(i).getName() + ", ";
+				temp = temp + "\n" + get(i);
 			}
 		}
-		return temp;
+		return temp + "\n]";
 	}
 
 	public RecipeIngredient get(int index) {
 		return recipe[index];
 	}
 
+	// order of recipeIngredients does not matter
 	public boolean equals(Object test) {
 		if (test instanceof CookingRecipe) {
 			if (((CookingRecipe) test).getNumberOfIngredients() != this.getNumberOfIngredients()) {
@@ -119,12 +121,18 @@ public class CookingRecipe {
 			} else if (!((CookingRecipe) test).getName().equals(this.getName())) {
 				return false;
 			}
+			// test if all ingredients in CookingRecipe is found in recipe of
+			// this object
 			for (int i = 0; i < recipe.length; i++) {
-				if (!((CookingRecipe) test).get(i).equals(recipe[i])) {
+
+				if (this.getRecipeIngredient(((CookingRecipe) test).get(i)) == null) {
+					return false;
+				}
+				
+				if(recipe[i].getQuantity() != ((CookingRecipe) test).get(i).getQuantity()){
 					return false;
 				}
 			}
-
 			return true;
 		}
 		return false;
